@@ -22,9 +22,13 @@ export const ChatContainer = () => {
   };
 
   return (
-    <div>
-      <MessageList messages={messages} />
-      <MessageInput onSend={handleSend} />
+    <div className="flex flex-col h-screen w-full">
+      <main className="flex-1 px-6">
+        <MessageList messages={messages} />
+      </main>
+      <footer className="w-full bg-blue-400 p-2">
+        <MessageInput onSend={handleSend} />
+      </footer>
     </div>
   );
 };

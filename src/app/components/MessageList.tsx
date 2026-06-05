@@ -3,10 +3,10 @@ import { MessageItem } from './MessageItem';
 
 export const MessageList = ({ messages }: { messages: Message[] }) => {
   return (
-    <div>
+    <ul className="max-w-[640px] mx-auto">
       {messages.map((msg) => (
-        <MessageItem key={msg._id} message={msg.message}></MessageItem>
+        <MessageItem key={msg._id} {...msg}></MessageItem>
       ))}
-    </div>
+    </ul>
   );
 };
