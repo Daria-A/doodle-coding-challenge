@@ -1,12 +1,9 @@
 import { CreateMessageRequest, Message } from '../app/types';
 
-const accessToken = 'super-secret-doodle-token';
-const API_URL = 'http://localhost:3000/api';
-
 export async function getMessages(): Promise<Message[]> {
-  const res = await fetch(`${API_URL}/v1/messages`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/messages`, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
     },
   });
 
@@ -18,8 +15,11 @@ export async function getMessages(): Promise<Message[]> {
 }
 
 export async function postMessages(message: CreateMessageRequest): Promise<Message> {
-  const res = await fetch(`${API_URL}/v1/messages`, {
-    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+  const res = await fetch(`${process.env.NEXT_PUBLICAPI_URL}/v1/messages`, {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
     method: 'POST',
     body: JSON.stringify(message),
   });
