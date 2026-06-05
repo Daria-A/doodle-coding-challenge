@@ -55,3 +55,22 @@ Features
 - Accessible markup — semantic HTML, aria labels, keyboard navigation
 - Responsive layout for mobile and desktop
 ```
+
+## Trade-offs & Future Improvements
+
+- **Tailwind CSS** — chosen for rapid development and
+  colocation of styles with markup. The trade-off is
+  verbose class names; a larger project might benefit
+  from a component library or CSS Modules instead.
+
+- **Error handling** — current implementation covers
+  basic fetch failures. Production-ready code would
+  add retry logic, user-facing error states, and
+  request timeouts.
+
+- **Pagination** — the API supports `after` and `limit`
+  query params for fetching messages after a specific
+  timestamp. This was not implemented due to time
+  constraints but would be the basis for polling —
+  storing the last message timestamp and passing it
+  as `after` on each interval fetch to get only new messages.
