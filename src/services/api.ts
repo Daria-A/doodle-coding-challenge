@@ -14,6 +14,23 @@ export async function getMessages(): Promise<Message[]> {
   return res.json();
 }
 
+export async function getNewMessages(lastTimestamp: string): Promise<Message[]> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/v1/messages?after=${lastTimestamp}&limit=10`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+      },
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to load messages');
+  }
+
+  return res.json();
+}
+
 export async function postMessages(message: CreateMessageRequest): Promise<Message> {
   const res = await fetch(`${process.env.NEXT_PUBLICAPI_URL}/v1/messages`, {
     headers: {

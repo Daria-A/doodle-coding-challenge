@@ -68,9 +68,7 @@ Features
   add retry logic, user-facing error states, and
   request timeouts.
 
-- **Pagination** — the API supports `after` and `limit`
-  query params for fetching messages after a specific
-  timestamp. This was not implemented due to time
-  constraints but would be the basis for polling —
-  storing the last message timestamp and passing it
-  as `after` on each interval fetch to get only new messages.
+- **Polling** — messages are fetched on load and every
+  3 seconds using the API's `after` timestamp and `limit`
+  params to fetch only new messages. A WebSocket connection
+  would be a more efficient solution for a production app.

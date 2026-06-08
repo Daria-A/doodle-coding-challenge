@@ -4,15 +4,24 @@ import { useState, useEffect } from 'react';
 import { Message } from '../types';
 import { MessageList } from './MessageList';
 import { MessageInput } from './MessageInput';
-import { getMessages, postMessages } from '../../services/api';
+import { getMessages, getNewMessages, postMessages } from '../../services/api';
 
 export const ChatContainer = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    getMessages().then((msgs) => {
-      setMessages(msgs);
-    });
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const poll = async (lastTimestamp?: string) => {
+      const newMessages = lastTimestamp ? await getNewMessages(lastTimestamp) : await getMessages();
+      setMessages((prev) => [...prev, ...newMessages]);
+      const latestTimestamp = newMessages.at(-1)?.createdAt ?? lastTimestamp;
+      timeout = setTimeout(() => poll(latestTimestamp), 3000);
+    };
+
+    poll();
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const handleSend = async (text: string) => {
